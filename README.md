@@ -227,6 +227,12 @@ url-shortener-microservices/
 
 ---
 
+
+## System Design
+
+![High Level Design](./assets/hld-diagram.png)
+
+
 ## Author
 
 Built as a hands-on system design and microservices learning project — from whiteboard architecture through to a working distributed system.
