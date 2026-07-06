@@ -1,0 +1,27 @@
+# STS / Eclipse workspace metadata — never commit this
+.metadata/
+
+# Maven build output
+target/
+*.class
+
+# Eclipse/STS project-level files
+.settings/
+.project
+.classpath
+.factorypath
+
+# IntelliJ (in case you switch later)
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local secrets/overrides
+application-local.yml
+.env

@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: token-service
+          uri: lb://TOKEN-SERVICE
+          predicates:
+            - Path=/api/v1/token/**
+
+        - id: url-shortener-service
+          uri: lb://URL-SHORTENER-SERVICE
+          predicates:
+            - Path=/api/v1/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
