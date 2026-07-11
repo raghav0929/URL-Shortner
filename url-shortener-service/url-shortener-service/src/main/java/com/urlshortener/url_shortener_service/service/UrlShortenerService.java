@@ -2,6 +2,8 @@ package com.urlshortener.url_shortener_service.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.urlshortener.url_shortener_service.entity.UrlMapping;
@@ -36,8 +38,22 @@ public class UrlShortenerService {
         return shortCode;
     }
 
+    @Cacheable(value = "urlCache", key = "#shortCode")
     public UrlMapping resolve(String shortCode) {
     	return urlMappingRepository.findById(shortCode)
                 .orElseThrow(() -> new ShortCodeNotFoundException(shortCode));
     }
+    
+    @Async
+    public void trackClick(String shortCode) {
+        urlMappingRepository.findById(shortCode).ifPresent(mapping -> {
+            mapping.setClickCount(mapping.getClickCount() + 1);
+            urlMappingRepository.save(mapping);
+        });
+    }
+
+	public UrlMapping getStats(String shortCode) {
+		return urlMappingRepository.findById(shortCode)
+				.orElseThrow(()-> new ShortCodeNotFoundException(shortCode));
+	}
 }

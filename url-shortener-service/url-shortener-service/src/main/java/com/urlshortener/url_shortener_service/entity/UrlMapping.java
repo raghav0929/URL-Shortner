@@ -5,10 +5,12 @@ package com.urlshortener.url_shortener_service.entity;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+
+import java.io.Serializable;
 import java.time.Instant;
 
 @Table("urls")
-public class UrlMapping {
+public class UrlMapping implements Serializable{
 
     @PrimaryKey("short_code")
     private String shortCode;

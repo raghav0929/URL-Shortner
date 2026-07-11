@@ -16,13 +16,25 @@ spring:
             - Path=/api/v1/token/**
 
         - id: url-shortener-service
-          uri: lb://URL-SHORTENER-SERVICE
+          uri: http://localhost:8082
           predicates:
             - Path=/api/v1/**
 
 eureka:
   client:
+    registry-fetch-interval-seconds: 5
     service-url:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.netflix.discovery: DEBUG

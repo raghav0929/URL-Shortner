@@ -31,9 +31,16 @@ public class UrlController {
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
+    	service.trackClick(shortCode);
         UrlMapping mapping = service.resolve(shortCode);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(mapping.getOriginalUrl()))
                 .build();
+    }
+    
+    @GetMapping("/stats/{shortCode}")
+    public ResponseEntity<UrlMapping> getStats(@PathVariable String shortCode) {
+        UrlMapping mapping = service.getStats(shortCode);
+        return ResponseEntity.ok(mapping);
     }
 }
